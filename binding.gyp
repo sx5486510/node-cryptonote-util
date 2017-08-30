@@ -4,7 +4,7 @@
             "target_name": "cryptonote",
             "sources": [
                 "src/main.cc",
-                "src/cryptonote_core/cryptonote_format_utils.cpp",
+                "src/cryptonote_core/CryptoNoteFormatUtils.cpp",
                 "src/crypto/tree-hash.c",
                 "src/crypto/crypto.cpp",
                 "src/crypto/crypto-ops.c",
