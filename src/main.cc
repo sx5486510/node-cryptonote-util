@@ -7,7 +7,7 @@
 #include <algorithm>
 #include "cryptonote_core/CryptoNoteBasic.h"
 #include "cryptonote_core/CryptoNoteFormatUtils.h"
-#include "cryptonote_protocol/blobdatatype.h"
+//#include "cryptonote_protocol/blobdatatype.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
 #include "common/base58.h"
