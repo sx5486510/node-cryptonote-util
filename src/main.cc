@@ -10,7 +10,7 @@
 //#include "cryptonote_protocol/blobdatatype.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
-#include "common/Base58.h"
+#include "Common/Base58.h"
 // #include "Serialization/binary_utils.h"
 #include <nan.h>
 
