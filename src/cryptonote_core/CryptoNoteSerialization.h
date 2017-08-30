@@ -19,7 +19,7 @@
 
 #include "CryptoNoteBasic.h"
 #include "crypto/chacha8.h"
-#include "serialization/ISerializer.h"
+#include "Serialization/ISerializer.h"
 #include "crypto/crypto.h"
 
 namespace Crypto {
