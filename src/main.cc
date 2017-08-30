@@ -10,8 +10,8 @@
 //#include "cryptonote_protocol/blobdatatype.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
-#include "common/base58.h"
-#include "serialization/binary_utils.h"
+#include "common/Base58.h"
+// #include "Serialization/binary_utils.h"
 #include <nan.h>
 
 #define THROW_ERROR_EXCEPTION(x) NanThrowError(x)
