@@ -4,14 +4,14 @@
             "target_name": "cryptonote",
             "sources": [
                 "src/main.cc",
-                "src/cryptonote_core/CryptoNoteFormatUtils.cpp",
+                "src/CryptoNoteCore/CryptoNoteFormatUtils.cpp",
                 "src/crypto/tree-hash.c",
                 "src/crypto/crypto.cpp",
                 "src/crypto/crypto-ops.c",
                 "src/crypto/crypto-ops-data.c",
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
-                "src/common/base58.cpp",
+                "src/Common/Base58.cpp",
             ],
             "include_dirs": [
                 "src",
