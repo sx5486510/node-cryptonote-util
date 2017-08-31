@@ -8,6 +8,7 @@
 #include "CryptoNoteCore/CryptoNoteBasic.h"
 #include "CryptoNoteCore/CryptoNoteFormatUtils.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
+#include "CryptoNoteCore/TransactionExtra.h"
 // #include "cryptonote_protocol/blobdatatype.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
@@ -15,6 +16,7 @@
 #include "Common/StringTools.h"
 #include "CryptoNote.h"
 #include "CryptoTypes.h"
+#include "CryptoNoteConfig.h"
 // #include "Serialization/binary_utils.h"
 #include <nan.h>
 #include <misc_log_ex.h>
@@ -232,47 +234,53 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 /*
+*/
 
-static bool fillExtra(cryptonote::Block& block1, const cryptonote::Block& block2) {
-    cryptonote::tx_extra_merge_mining_tag mm_tag;
+static bool fillExtra(Block& block1, const Block& block2) {
+	TransactionExtraMergeMiningTag mm_tag;
     mm_tag.depth = 0;
-    if (!cryptonote::get_block_header_hash(block2, mm_tag.merkle_root))
+    if (!get_aux_block_header_hash(block2, mm_tag.merkleRoot))
         return false;
 
-    block1.miner_tx.extra.clear();
-    if (!cryptonote::append_mm_tag_to_extra(block1.miner_tx.extra, mm_tag))
+    block1.baseTransaction.extra.clear();
+	if (!appendMergeMiningTagToExtra(block1.baseTransaction.extra, mm_tag))
         return false;
 
     return true;
 }
 
-static bool mergeBlocks(const cryptonote::Block& block1, cryptonote::Block& block2, const std::vector<Crypto::hash>& branch2) {
+static bool mergeBlocks(const Block& block1, Block& block2, const std::vector<Crypto::Hash>& branch2) {
     block2.timestamp = block1.timestamp;
-    block2.parent_block.major_version = block1.major_version;
-    block2.parent_block.minor_version = block1.minor_version;
-    block2.parent_block.prev_id = block1.prev_id;
-    block2.parent_block.nonce = block1.nonce;
-    block2.parent_block.miner_tx = block1.miner_tx;
-    block2.parent_block.number_of_transactions = block1.tx_hashes.size() + 1;
-    block2.parent_block.miner_tx_branch.resize(Crypto::tree_depth(block1.tx_hashes.size() + 1));
-    std::vector<Crypto::hash> transactionHashes;
-    transactionHashes.push_back(cryptonote::get_transaction_hash(block1.miner_tx));
-    std::copy(block1.tx_hashes.begin(), block1.tx_hashes.end(), std::back_inserter(transactionHashes));
-    tree_branch(transactionHashes.data(), transactionHashes.size(), block2.parent_block.miner_tx_branch.data());
-    block2.parent_block.blockchain_branch = branch2;
+    block2.parentBlock.majorVersion = block1.majorVersion;
+    block2.parentBlock.minorVersion = block1.minorVersion;
+    block2.parentBlock.previousBlockHash = block1.previousBlockHash;
+   // block2.parentBlock.nonce = block1.nonce;
+    block2.parentBlock.baseTransaction = block1.baseTransaction;
+    block2.parentBlock.transactionCount = block1.transactionHashes.size() + 1;
+    block2.parentBlock.baseTransactionBranch.resize(Crypto::tree_depth(block1.transactionHashes.size() + 1));
+    std::vector<Crypto::Hash> transactionHashes;
+
+	Crypto::Hash minerTxHash;
+	if (!getObjectHash(block1.baseTransaction, minerTxHash)) {
+		return false;
+	}
+    transactionHashes.push_back(minerTxHash);
+    std::copy(block1.transactionHashes.begin(), block1.transactionHashes.end(), std::back_inserter(transactionHashes));
+    tree_branch(transactionHashes.data(), transactionHashes.size(), block2.parentBlock.baseTransactionBranch.data());
+    block2.parentBlock.blockchainBranch = branch2;
     return true;
 }
 
-static bool construct_parent_block(const cryptonote::Block& b, cryptonote::Block& parent_block) {
-    parent_block.major_version = 1;
-    parent_block.minor_version = 0;
-    parent_block.timestamp = b.timestamp;
-    parent_block.prev_id = b.prev_id;
-    parent_block.nonce = b.parent_block.nonce;
-    parent_block.miner_tx.version = CURRENT_TRANSACTION_VERSION;
-    parent_block.miner_tx.unlock_time = 0;
+static bool construct_parent_block(const Block& b, Block& parentBlock) {
+    parentBlock.majorVersion = 1;
+    parentBlock.minorVersion = 0;
+    parentBlock.timestamp = b.timestamp;
+    parentBlock.previousBlockHash = b.previousBlockHash;
+    parentBlock.nonce = b.nonce;
+    parentBlock.baseTransaction.version = CURRENT_TRANSACTION_VERSION;
+    parentBlock.baseTransaction.unlockTime = 0;
 
-    return fillExtra(parent_block, b);
+    return fillExtra(parentBlock, b);
 }
 
 NAN_METHOD(convert_blob_fa) {
@@ -286,7 +294,7 @@ NAN_METHOD(convert_blob_fa) {
         return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
     std::string input = std::string(Buffer::Data(target), Buffer::Length(target));
-    std::string output = "";
+	BinaryArray output;
 
     //convert
     Block b = AUTO_VAL_INIT(b);
@@ -294,11 +302,11 @@ NAN_METHOD(convert_blob_fa) {
         return THROW_ERROR_EXCEPTION("Failed to parse Block");
 
      else {
-        Block parent_block;
-        if (!construct_parent_block(b, parent_block))
+        Block parentBlock;
+        if (!construct_parent_block(b, parentBlock))
             return THROW_ERROR_EXCEPTION("Failed to construct parent Block");
 
-        if (!get_block_hashing_blob(parent_block, output))
+        if (!get_block_hashing_blob(parentBlock, output))
             return THROW_ERROR_EXCEPTION("Failed to create mining Block");
     }
 //    Local<Object> v8::Local<v8::Value> returnValue =  Nan::NewBuffer(output.length()).ToLocalChecked();
@@ -337,13 +345,13 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
         return THROW_ERROR_EXCEPTION("Failed to parse Block");
 
     b.nonce = nonce;
-    if (b.major_version == BLOCK_MAJOR_VERSION_2) {
-        Block parent_block;
-        b.parent_block.nonce = nonce;
-        if (!construct_parent_block(b, parent_block))
+    if (b.majorVersion == BLOCK_MAJOR_VERSION_2) {
+        Block parentBlock;
+       // b.parentBlock.nonce = nonce;
+        if (!construct_parent_block(b, parentBlock))
             return THROW_ERROR_EXCEPTION("Failed to construct parent Block");
 
-        if (!mergeBlocks(parent_block, b, std::vector<Crypto::hash>()))
+        if (!mergeBlocks(parentBlock, b, std::vector<Crypto::Hash>()))
             return THROW_ERROR_EXCEPTION("Failed to postprocess mining Block");
     }
 
@@ -357,7 +365,7 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
+	/*
     if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
@@ -370,15 +378,16 @@ void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info)
 
     std::string data;
     uint64_t prefix;
-    if (!tools::base58::decode_addr(input, prefix, data))
+    if (!Tools::Base58::decode_addr(input, prefix, data))
     {
         info.GetReturnValue().Set(Nan::Undefined());
     }
     //    info.GetReturnValue().Set(Nan::Undefined());
 
-
     integrated_address iadr;
-    if (!::serialization::parse_binary(data, iadr) || !Crypto::check_key(iadr.adr.m_spend_public_key) || !Crypto::check_key(iadr.adr.m_view_public_key))
+    if (!::serialization::parse_binary(data, iadr) 
+		|| !Crypto::check_key(iadr.adr.m_spend_public_key)
+		|| !Crypto::check_key(iadr.adr.m_view_public_key))
     {
         if(data.length())
         {
@@ -392,14 +401,13 @@ void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info)
         info.GetReturnValue().Set(
                 returnValue
         );
-
     }
     else
     {
         info.GetReturnValue().Set(Nan::New(static_cast<uint32_t>(prefix)));
     }
+	*/
 }
-*/
 
 NAN_MODULE_INIT(init) {
     Nan::Set(target, Nan::New("construct_block_blob").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(construct_block_blob)).ToLocalChecked());
@@ -407,9 +415,7 @@ NAN_MODULE_INIT(init) {
 	Nan::Set(target, Nan::New("convert_blob").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(convert_blob)).ToLocalChecked());
 	Nan::Set(target, Nan::New("convert_blob_bb").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(convert_blob_bb)).ToLocalChecked());
 	Nan::Set(target, Nan::New("address_decode").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(address_decode)).ToLocalChecked());
-	/*
 	Nan::Set(target, Nan::New("address_decode_integrated").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(address_decode_integrated)).ToLocalChecked());
-	*/
 }
 
 NODE_MODULE(cryptonote, init)
