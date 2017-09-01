@@ -355,6 +355,7 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+	/*
     if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
@@ -395,6 +396,7 @@ void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info)
     {
         info.GetReturnValue().Set(Nan::New(static_cast<uint32_t>(prefix)));
     }
+	*/
 }
 
 NAN_MODULE_INIT(init) {
