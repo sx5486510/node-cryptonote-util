@@ -58,13 +58,13 @@ std::vector<uint8_t> asBinaryArray(const std::string& data) {
 }
 
 uint8_t fromHex(char character) {
-		uint8_t value = characterValues[static_cast<unsigned char>(character)];
-  if (value > 0x0f) {
-	  printf("----%c %x-----", character, character);
-    throw std::runtime_error("fromHex: invalid character");
-  }
+	uint8_t value = characterValues[static_cast<unsigned char>(character)];
+	printf("--%x---", character);
+	if (value > 0x0f) {
+		throw std::runtime_error("fromHex: invalid character");
+	}
 
-  return value;
+	return value;
 }
 
 bool fromHex(char character, uint8_t& value) {
@@ -123,15 +123,16 @@ std::vector<uint8_t> fromHex(const std::string& text) {
 	printf("---%d---", text.size());
 	printf(text.c_str());
 
-  if ((text.size() & 1) != 0) {
-    throw std::runtime_error("fromHex: invalid string size");
-  }
+	if ((text.size() & 1) != 0) {
+		throw std::runtime_error("fromHex: invalid string size");
+	}
 
-  std::vector<uint8_t> data(text.size() >> 1);
-  for (size_t i = 0; i < data.size(); ++i) {
-    data[i] = fromHex(text[i << 1]) << 4 | fromHex(text[(i << 1) + 1]);
-  }
-  return data;
+	std::vector<uint8_t> data(text.size() >> 1);
+	for (size_t i = 0; i < data.size(); ++i) {
+		data[i] = fromHex(text[i << 1]) << 4 | fromHex(text[(i << 1) + 1]);
+	}
+
+	return data;
 }
 
 bool fromHex(const std::string& text, std::vector<uint8_t>& data) {
