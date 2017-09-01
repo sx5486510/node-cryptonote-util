@@ -7,6 +7,7 @@
                 "src/CryptoNoteCore/CryptoNoteFormatUtils.cpp",
                 "src/CryptoNoteCore/CryptoNoteSerialization.cpp",
                 "src/CryptoNoteCore/TransactionExtra.cpp",
+                "src/CryptoNoteCore/CryptoNoteTools.cpp",
                 "src/crypto/tree-hash.c",
                 "src/crypto/crypto.cpp",
                 "src/crypto/crypto-ops.c",
