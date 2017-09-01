@@ -13,8 +13,6 @@
 #include "CryptoNote.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
 #include "Common/StringTools.h"
-#include "Serialization/BinaryInputStreamSerializer.h"
-#include "Serialization/BinaryInputStreamSerializer.cpp"
 
 #include "CryptoNoteCore/CryptoNoteBasic.h"
 #include "CryptoNoteCore/CryptoNoteFormatUtils.h"
@@ -24,6 +22,9 @@
 #include "Common/Base58.h"
 #include "CryptoTypes.h"
 #include "CryptoNoteConfig.h"
+
+#include "Serialization/BinaryInputStreamSerializer.h"
+#include "Serialization/BinaryInputStreamSerializer.cpp"
 
 #define THROW_ERROR_EXCEPTION(x) Nan::ThrowError(x)
 
