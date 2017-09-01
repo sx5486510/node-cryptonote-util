@@ -11,7 +11,7 @@
 #include "CryptoNoteCore/CryptoNoteTools.h"
 #include "Common/StringTools.h"
 
-#define LOG_ERROR(msg) std::cout << concolor::red << msg << concolor::normal << std::endl
+#define LOG_ERROR(msg) std::cout << msg << << std::endl
 #ifndef CHECK_AND_ASSERT_MES
 #define CHECK_AND_ASSERT_MES(expr, fail_ret_val, message)   do{if(!(expr)) {LOG_ERROR(message); return fail_ret_val;};}while(0)
 #endif
