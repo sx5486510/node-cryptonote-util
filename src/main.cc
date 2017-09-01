@@ -38,7 +38,10 @@ bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 
 bool block_to_blob(const Block& b, std::string &blob)
 {
-	return false;
+	BinaryArray block_blob = toBinaryArray(b);
+	std::string blocktemplate_blob = toHex(block_blob);
+	blob = blocktemplate_blob;
+	return blocktemplate_blob.length() > 0;
 }
 
 std::string uint64be_to_blob(uint64_t num) {
