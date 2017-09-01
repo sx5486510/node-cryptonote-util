@@ -119,11 +119,11 @@ bool fromHex(const std::string& text, void* data, size_t bufferSize, size_t& siz
 }
 
 std::vector<uint8_t> fromHex(const std::string& text) {
+	throw std::runtime_error("fromHex: 333");
+
   if ((text.size() & 1) != 0) {
     throw std::runtime_error("fromHex: invalid string size");
   }
-
-  throw std::runtime_error("fromHex: 333");
 
   std::vector<uint8_t> data(text.size() >> 1);
   for (size_t i = 0; i < data.size(); ++i) {
