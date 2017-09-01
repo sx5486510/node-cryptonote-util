@@ -13,6 +13,7 @@
 #include "Common/StringTools.h"
 #include "Serialization/BinaryInputStreamSerializer.h"
 #include "Serialization/BinaryInputStreamSerializer.cpp"
+#include "Serialization/BinaryOutputStreamSerializer.cpp"
 
 #define LOG_ERROR(msg) std::cout << msg << std::endl
 #ifndef CHECK_AND_ASSERT_MES
