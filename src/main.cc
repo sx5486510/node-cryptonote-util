@@ -24,6 +24,7 @@ void callback(char* data, void* hint) {
 using namespace node;
 using namespace v8;
 using namespace CryptoNote;
+using namespace Common;
 
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
