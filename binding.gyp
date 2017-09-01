@@ -19,6 +19,7 @@
                 "src/Common/Base58.cpp",
                 "src/Common/StringTools.cpp",
                 "src/Common/StreamTools.cpp",
+                "src/Common/VectorOutputStream.cpp",
             ],
             "include_dirs": [
                 "src",
