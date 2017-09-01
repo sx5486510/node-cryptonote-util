@@ -8,6 +8,7 @@
 #include <nan.h>
 
 #include "CryptoNote.h"
+#include "CryptoNoteCore\CryptoNoteTools.h"
 
 void callback(char* data, void* hint) {
 	free(data);
@@ -19,6 +20,10 @@ using namespace CryptoNote;
 
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
+	BinaryArray blob = fromHex(b_blob);
+	bool r = fromBinaryArray(b, blob);
+	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
+	return true;
 	return true;
 }
 
