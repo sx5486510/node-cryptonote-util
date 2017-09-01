@@ -39,9 +39,11 @@ using namespace Common;
 
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
+	/*
 	BinaryArray blob = fromHex(b_blob);
 	bool r = fromBinaryArray(b, blob);
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
+	*/
 	return true;
 	/*
 	std::stringstream ss;
@@ -55,10 +57,13 @@ bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 
 bool block_to_blob(const Block& b, std::string &blob)
 {
+	/*
 	BinaryArray block_blob = toBinaryArray(b);
 	std::string blocktemplate_blob = toHex(block_blob);
 	blob = blocktemplate_blob;
 	return blocktemplate_blob.length() > 0;
+	*/
+	return false;
 }
 
 std::string uint64be_to_blob(uint64_t num) {
@@ -75,7 +80,7 @@ std::string uint64be_to_blob(uint64_t num) {
 }
 
 void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
+	/*
 	if (info.Length() < 2)
 		return THROW_ERROR_EXCEPTION("You must provide two arguments.");
 
@@ -104,10 +109,11 @@ void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	info.GetReturnValue().Set(
 		returnValue
 	);
+	*/
 }
 
 void get_block_id(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
+	/*
 	if (info.Length() < 1)
 		return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
@@ -132,10 +138,11 @@ void get_block_id(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	info.GetReturnValue().Set(
 		returnValue
 	);
+	*/
 }
 
 NAN_METHOD(convert_blob) {
-
+	/*
 	if (info.Length() < 1)
 		return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
@@ -159,10 +166,11 @@ NAN_METHOD(convert_blob) {
 	info.GetReturnValue().Set(
 		returnValue
 	);
+	*/
 }
 
 void convert_blob_bb(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
+	/*
 	if (info.Length() < 1)
 		return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
@@ -186,9 +194,11 @@ void convert_blob_bb(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	info.GetReturnValue().Set(
 		returnValue
 	);
+	*/
 }
 
 void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+	/*
 
 	if (info.Length() < 1)
 		return THROW_ERROR_EXCEPTION("You must provide one argument.");
@@ -231,12 +241,12 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	{
 		info.GetReturnValue().Set(Nan::New(static_cast<uint32_t>(prefix)));
 	}
+	*/
 }
 
-/*
-*/
 
 static bool fillExtra(Block& block1, const Block& block2) {
+	/*
 	TransactionExtraMergeMiningTag mm_tag;
     mm_tag.depth = 0;
     if (!get_aux_block_header_hash(block2, mm_tag.merkleRoot))
@@ -245,11 +255,13 @@ static bool fillExtra(Block& block1, const Block& block2) {
     block1.baseTransaction.extra.clear();
 	if (!appendMergeMiningTagToExtra(block1.baseTransaction.extra, mm_tag))
         return false;
+		*/
 
     return true;
 }
 
 static bool mergeBlocks(const Block& block1, Block& block2, const std::vector<Crypto::Hash>& branch2) {
+	/*
     block2.timestamp = block1.timestamp;
     block2.parentBlock.majorVersion = block1.majorVersion;
     block2.parentBlock.minorVersion = block1.minorVersion;
@@ -268,10 +280,12 @@ static bool mergeBlocks(const Block& block1, Block& block2, const std::vector<Cr
     std::copy(block1.transactionHashes.begin(), block1.transactionHashes.end(), std::back_inserter(transactionHashes));
     tree_branch(transactionHashes.data(), transactionHashes.size(), block2.parentBlock.baseTransactionBranch.data());
     block2.parentBlock.blockchainBranch = branch2;
-    return true;
+	*/
+	return true;
 }
 
 static bool construct_parent_block(const Block& b, Block& parentBlock) {
+	/*
     parentBlock.majorVersion = 1;
     parentBlock.minorVersion = 0;
     parentBlock.timestamp = b.timestamp;
@@ -281,10 +295,12 @@ static bool construct_parent_block(const Block& b, Block& parentBlock) {
     parentBlock.baseTransaction.unlockTime = 0;
 
     return fillExtra(parentBlock, b);
+	*/
+	return false;
 }
 
 NAN_METHOD(convert_blob_fa) {
-
+	/*
     if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
@@ -319,10 +335,11 @@ NAN_METHOD(convert_blob_fa) {
     info.GetReturnValue().Set(
         returnValue
     );
+	*/
 }
 
 void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-
+	/*
     if (info.Length() < 2)
         return THROW_ERROR_EXCEPTION("You must provide two arguments.");
 
@@ -362,6 +379,7 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     info.GetReturnValue().Set(
         returnValue
     );
+	*/
 }
 
 void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info) {
