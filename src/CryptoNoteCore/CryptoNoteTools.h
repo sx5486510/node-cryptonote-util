@@ -58,7 +58,7 @@ bool fromBinaryArray(T& object, const BinaryArray& binaryArray) {
   bool result = false;
   try {
     Common::MemoryInputStream stream(binaryArray.data(), binaryArray.size());
-    BinaryInputStreamSerializer serializer(stream);
+	CryptoNote::BinaryInputStreamSerializer serializer(stream);
     serialize(object, serializer);
     result = stream.endOfStream(); // check that all data was consumed
   } catch (std::exception&) {
