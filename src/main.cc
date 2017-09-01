@@ -44,11 +44,8 @@ using namespace Common;
 
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
-	std::cout << b_blob.c_str() << std::endl;
 	BinaryArray blob = fromHex(b_blob);
-	std::cout << "22222" << std::endl;
 	bool r = fromBinaryArray(b, blob);
-	std::cout << "33333" << std::endl;
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
 	return true;
 }
