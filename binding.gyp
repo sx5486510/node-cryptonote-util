@@ -12,6 +12,7 @@
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
                 "src/Common/Base58.cpp",
+                "src/Logging/ILogger.cpp",
             ],
             "include_dirs": [
                 "src",
