@@ -3,7 +3,7 @@
         {
             "target_name": "cryptonote",
             "sources": [
-                "src/main.cc",
+                "src/Serialization/BinaryInputStreamSerializer.cpp",
                 "src/CryptoNoteCore/CryptoNoteFormatUtils.cpp",
                 "src/crypto/tree-hash.c",
                 "src/crypto/crypto.cpp",
@@ -12,7 +12,7 @@
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
                 "src/Common/Base58.cpp",
-                "src/Serialization/BinaryInputStreamSerializer.cpp",
+                "src/main.cc",
             ],
             "include_dirs": [
                 "src",
