@@ -12,6 +12,7 @@
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
                 "src/Common/Base58.cpp",
+                "src/Serialization/BinaryInputStreamSerializer.cpp",
             ],
             "include_dirs": [
                 "src",
