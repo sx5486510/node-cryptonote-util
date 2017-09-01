@@ -29,7 +29,7 @@ using namespace Common;
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
 	BinaryArray blob;// = fromHex(b_blob);
-	bool r = fromBinaryArray(b, blob);
+	bool r = false;//fromBinaryArray(b, blob);
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
 	return true;
 }
