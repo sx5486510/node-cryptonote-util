@@ -192,7 +192,6 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
 	std::string input = std::string(Buffer::Data(target), Buffer::Length(target));
-	THROW_ERROR_EXCEPTION("111111111111111111");
 
 	std::string data;
 	uint64_t prefix;
@@ -201,6 +200,7 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 		info.GetReturnValue().Set(Nan::Undefined());
 	}
 	//    info.GetReturnValue().Set(Nan::Undefined());
+	THROW_ERROR_EXCEPTION("111111111111111111");
 
 	AccountPublicAddress adr;
 	if (!fromBinaryArray(adr, asBinaryArray(data))
