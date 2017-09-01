@@ -123,7 +123,9 @@ std::vector<uint8_t> fromHex(const std::string& text) {
   if ((text.size() & 1) != 0) {
     throw std::runtime_error("fromHex: invalid string size");
   }
-  std::cout << "fromHex 222" << std::endl
+
+  throw std::runtime_error("fromHex: 333");
+
   std::vector<uint8_t> data(text.size() >> 1);
   for (size_t i = 0; i < data.size(); ++i) {
     data[i] = fromHex(text[i << 1]) << 4 | fromHex(text[(i << 1) + 1]);
