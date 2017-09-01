@@ -8,7 +8,7 @@
 #include <nan.h>
 
 #include "CryptoNote.h"
-#include "CryptoNoteCore\CryptoNoteTools.h"
+#include "CryptoNoteCore/CryptoNoteTools.h"
 
 void callback(char* data, void* hint) {
 	free(data);
