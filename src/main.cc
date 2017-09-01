@@ -10,6 +10,10 @@
 #include "CryptoNote.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
 
+#ifndef CHECK_AND_ASSERT_MES
+#define CHECK_AND_ASSERT_MES(expr, fail_ret_val, message)   do{if(!(expr)) {LOG_ERROR(message); return fail_ret_val;};}while(0)
+#endif
+
 void callback(char* data, void* hint) {
 	free(data);
 }
