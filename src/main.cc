@@ -5,37 +5,17 @@
 #include <stdint.h>
 #include <string>
 #include <algorithm>
-#include "CryptoNoteCore/CryptoNoteBasic.h"
-#include "CryptoNoteCore/CryptoNoteFormatUtils.h"
-#include "CryptoNoteCore/CryptoNoteTools.h"
-#include "CryptoNoteCore/TransactionExtra.h"
-// #include "cryptonote_protocol/blobdatatype.h"
-#include "crypto/crypto.h"
-#include "crypto/hash.h"
-#include "Common/Base58.h"
-#include "Common/StringTools.h"
-#include "CryptoNote.h"
-#include "CryptoTypes.h"
-#include "CryptoNoteConfig.h"
-// #include "Serialization/binary_utils.h"
 #include <nan.h>
-#include <misc_log_ex.h>
-#include <misc_language.h>
 
-#define THROW_ERROR_EXCEPTION(x) Nan::ThrowError(x)
+#include "CryptoNote.h"
 
 void callback(char* data, void* hint) {
-  free(data);
+	free(data);
 }
 
 using namespace node;
 using namespace v8;
 using namespace CryptoNote;
-using namespace Common;
-
-#ifndef CHECK_AND_ASSERT_MES
-#define CHECK_AND_ASSERT_MES(expr, fail_ret_val, message)   do{if(!(expr)) {LOG_ERROR(message); return fail_ret_val;};}while(0)
-#endif
 
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
@@ -77,7 +57,7 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
 
 static bool fillExtra(Block& block1, const Block& block2) {
-    return true;
+	return true;
 }
 
 static bool mergeBlocks(const Block& block1, Block& block2, const std::vector<Crypto::Hash>& branch2) {
@@ -98,7 +78,7 @@ void address_decode_integrated(const Nan::FunctionCallbackInfo<v8::Value>& info)
 }
 
 NAN_MODULE_INIT(init) {
-    Nan::Set(target, Nan::New("construct_block_blob").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(construct_block_blob)).ToLocalChecked());
+	Nan::Set(target, Nan::New("construct_block_blob").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(construct_block_blob)).ToLocalChecked());
 	Nan::Set(target, Nan::New("get_block_id").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(get_block_id)).ToLocalChecked());
 	Nan::Set(target, Nan::New("convert_blob").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(convert_blob)).ToLocalChecked());
 	Nan::Set(target, Nan::New("convert_blob_bb").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(convert_blob_bb)).ToLocalChecked());
