@@ -26,10 +26,24 @@ using namespace v8;
 using namespace CryptoNote;
 using namespace Common;
 
+bool fromBinaryArrayBlock(Block object, const BinaryArray& binaryArray) {
+	bool result = false;
+	try {
+		Common::MemoryInputStream stream(binaryArray.data(), binaryArray.size());
+		BinaryInputStreamSerializer serializer(stream);
+		serialize(object, serializer);
+		result = stream.endOfStream(); // check that all data was consumed
+	}
+	catch (std::exception&) {
+	}
+
+	return result;
+}
+
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
 	BinaryArray blob = fromHex(b_blob);
-	bool r = fromBinaryArray(b, blob);
+	bool r = fromBinaryArrayBlock(b, blob);
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
 	return true;
 }
