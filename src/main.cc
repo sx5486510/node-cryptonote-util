@@ -9,7 +9,9 @@
 
 #include "CryptoNote.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
+#include "Common/StringTools.h"
 
+#define LOG_ERROR(msg) std::cout << concolor::red << msg << concolor::normal << std::endl
 #ifndef CHECK_AND_ASSERT_MES
 #define CHECK_AND_ASSERT_MES(expr, fail_ret_val, message)   do{if(!(expr)) {LOG_ERROR(message); return fail_ret_val;};}while(0)
 #endif
@@ -27,7 +29,6 @@ bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 	BinaryArray blob = fromHex(b_blob);
 	bool r = fromBinaryArray(b, blob);
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
-	return true;
 	return true;
 }
 
