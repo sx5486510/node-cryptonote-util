@@ -200,13 +200,13 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 		info.GetReturnValue().Set(Nan::Undefined());
 	}
 	//    info.GetReturnValue().Set(Nan::Undefined());
-	THROW_ERROR_EXCEPTION("111111111111111111");
 
 	AccountPublicAddress adr;
 	if (!fromBinaryArray(adr, asBinaryArray(data))
 		|| !check_key(adr.spendPublicKey)
 		|| !check_key(adr.viewPublicKey))
 	{
+		THROW_ERROR_EXCEPTION("111111111111111111");
 		if (data.length())
 		{
 			data = uint64be_to_blob(prefix) + data;
@@ -219,10 +219,10 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 		info.GetReturnValue().Set(
 			returnValue
 		);
-
 	}
 	else
 	{
+		THROW_ERROR_EXCEPTION("33333333333333333");
 		info.GetReturnValue().Set(Nan::New(static_cast<uint32_t>(prefix)));
 	}
 }
