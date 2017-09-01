@@ -22,6 +22,15 @@
 #include "CryptoTypes.h"
 #include "CryptoNoteConfig.h"
 #include "Common/Base58.h"
+#include "Common/Base58.cpp"
+
+#include "cryptonote_core/cryptonote_format_utils.cpp"
+#include "crypto/tree-hash.c"
+#include "crypto/crypto.cpp"
+#include "crypto/crypto-ops.c"
+#include "crypto/crypto-ops-data.c"
+#include "crypto/hash.c"
+#include "crypto/keccak.c"
 
 #include <misc_log_ex.h>
 #include <misc_language.h>
