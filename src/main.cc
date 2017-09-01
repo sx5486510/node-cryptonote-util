@@ -14,11 +14,24 @@
 #include "Serialization/BinaryInputStreamSerializer.h"
 #include "Serialization/BinaryInputStreamSerializer.cpp"
 #include "Serialization/BinaryOutputStreamSerializer.cpp"
+#include "CryptoNoteCore/CryptoNoteFormatUtils.h"
+#include "CryptoNoteCore/TransactionExtra.h"
+
+#include "crypto/crypto.h"
+#include "crypto/hash.h"
+#include "CryptoTypes.h"
+#include "CryptoNoteConfig.h"
+#include "Common/Base58.h"
+
+#include <misc_log_ex.h>
+#include <misc_language.h>
 
 #define LOG_ERROR(msg) std::cout << msg << std::endl
 #ifndef CHECK_AND_ASSERT_MES
 #define CHECK_AND_ASSERT_MES(expr, fail_ret_val, message)   do{if(!(expr)) {LOG_ERROR(message); return fail_ret_val;};}while(0)
 #endif
+
+#define THROW_ERROR_EXCEPTION(x) Nan::ThrowError(x)
 
 void callback(char* data, void* hint) {
 	free(data);
