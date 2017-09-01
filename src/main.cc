@@ -11,6 +11,7 @@
 #include "CryptoNote.h"
 #include "CryptoNoteCore/CryptoNoteTools.h"
 #include "Common/StringTools.h"
+#include "Serialization/BinaryInputStreamSerializer.h"
 
 #define LOG_ERROR(msg) std::cout << msg << std::endl
 #ifndef CHECK_AND_ASSERT_MES
