@@ -14,6 +14,7 @@
                 "src/Common/Base58.cpp",
                 "src/Common/StringTools.cpp",
                 "src/Logging/ILogger.cpp",
+                "src/Common/MemoryInputStream.cpp",
             ],
             "include_dirs": [
                 "src",
