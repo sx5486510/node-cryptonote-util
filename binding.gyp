@@ -15,6 +15,7 @@
                 "src/Common/StringTools.cpp",
                 "src/Logging/ILogger.cpp",
                 "src/Common/MemoryInputStream.cpp",
+                "src/Common/StringView.cpp",
                 "src/CryptoNoteCore/CryptoNoteSerialization.cpp",
             ],
             "include_dirs": [
