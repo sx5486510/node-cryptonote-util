@@ -13,6 +13,7 @@
                 "src/crypto/keccak.c",
                 "src/Common/Base58.cpp",
                 "src/Common/StringTools.cpp",
+                "src/Logging/ILogger.cpp",
             ],
             "include_dirs": [
                 "src",
