@@ -44,7 +44,7 @@ using namespace Common;
 
 bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
 {
-	printf("%s", b_blob.c_str());
+	printf("---%s--- %d", b_blob.c_str(), b_blob.length());
 	BinaryArray blob = fromHex(b_blob);
 	bool r = fromBinaryArray(b, blob);
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
