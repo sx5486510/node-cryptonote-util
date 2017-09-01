@@ -58,7 +58,6 @@ std::vector<uint8_t> asBinaryArray(const std::string& data) {
 }
 
 uint8_t fromHex(char character) {
-	std::cout << "fromHex 333" << character  << std::endl
 		uint8_t value = characterValues[static_cast<unsigned char>(character)];
   if (value > 0x0f) {
     throw std::runtime_error("fromHex: invalid character");
