@@ -121,7 +121,7 @@ bool fromHex(const std::string& text, void* data, size_t bufferSize, size_t& siz
 std::vector<uint8_t> fromHex(const std::string& text) {
 	printf("11111");
 
-	sprintf("---%d---", text.size());
+	printf("---%d---", text.size());
 
   if ((text.size() & 1) != 0) {
     throw std::runtime_error("fromHex: invalid string size");
@@ -146,6 +146,7 @@ std::vector<uint8_t> fromHex(const std::string& text) {
 	  {
 		  char buf[10];
 		  sprintf(buf, "fromHex: invalid string size11111 %d", i);
+		  printf(buf);
 		  throw std::runtime_error(buf);
 	  }
   }
