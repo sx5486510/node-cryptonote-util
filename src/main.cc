@@ -105,9 +105,35 @@ void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	Block b = AUTO_VAL_INIT(b);
 	if (!parse_and_validate_block_from_blob(block_template_blob, b))
 		return THROW_ERROR_EXCEPTION("Failed to parse Block");
-	b.nonce = nonce;
+	// b.nonce = nonce;
 	if (!block_to_blob(b, output))
 		return THROW_ERROR_EXCEPTION("Failed to convert Block to blob");
+
+	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)output.data(), output.size()).ToLocalChecked();
+	info.GetReturnValue().Set(
+		returnValue
+	);
+}
+
+NAN_METHOD(convert_blob) {
+	if (info.Length() < 1)
+		return THROW_ERROR_EXCEPTION("You must provide one argument.");
+
+	Local<Object> target = info[0]->ToObject();
+
+	if (!Buffer::HasInstance(target))
+		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
+	BinaryArray output;
+
+	//convert
+	Block b = AUTO_VAL_INIT(b);
+	if (!parse_and_validate_block_from_blob(input, b))
+		return THROW_ERROR_EXCEPTION("Failed to parse Block");
+
+	if (!get_block_hashing_blob(b, output))
+		return THROW_ERROR_EXCEPTION("Failed to create mining Block");
 
 	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)output.data(), output.size()).ToLocalChecked();
 	info.GetReturnValue().Set(
@@ -137,32 +163,6 @@ void get_block_id(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
 	char *cstr = reinterpret_cast<char*>(&block_id);
 	v8::Local<v8::Value> returnValue = Nan::CopyBuffer(cstr, 32).ToLocalChecked();
-	info.GetReturnValue().Set(
-		returnValue
-	);
-}
-
-NAN_METHOD(convert_blob) {
-	if (info.Length() < 1)
-		return THROW_ERROR_EXCEPTION("You must provide one argument.");
-
-	Local<Object> target = info[0]->ToObject();
-
-	if (!Buffer::HasInstance(target))
-		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
-
-	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
-	BinaryArray output;
-
-	//convert
-	Block b = AUTO_VAL_INIT(b);
-	if (!parse_and_validate_block_from_blob(input, b))
-		return THROW_ERROR_EXCEPTION("Failed to parse Block");
-
-	if (!get_block_hashing_blob(b, output))
-		return THROW_ERROR_EXCEPTION("Failed to create mining Block");
-
-	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)output.data(), output.size()).ToLocalChecked();
 	info.GetReturnValue().Set(
 		returnValue
 	);
