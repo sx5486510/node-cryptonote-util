@@ -42,12 +42,9 @@ using namespace v8;
 using namespace CryptoNote;
 using namespace Common;
 
-bool parse_and_validate_block_from_blob(const std::string& b_blob, Block& b)
+bool parse_and_validate_block_from_blob(const BinaryArray& b_blob, Block& b)
 {
-	BinaryArray blob;// = fromHex(b_blob);
-	blob.resize(b_blob.size());
-	blob.assign(b_blob.begin(), b_blob.end());
-	bool r = fromBinaryArray(b, blob);
+	bool r = fromBinaryArray(b, b_blob);
 	CHECK_AND_ASSERT_MES(r, false, "Failed to parse Block from blob");
 	return true;
 }
@@ -73,6 +70,14 @@ std::string uint64be_to_blob(uint64_t num) {
 	return res;
 }
 
+BinaryArray stringToBinaryArray(std::string &str)
+{
+	BinaryArray bin;
+	bin.resize(str.size());
+	bin.assign(str.begin(), str.end());
+	return bin;
+}
+
 void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	if (info.Length() < 2)
 		return THROW_ERROR_EXCEPTION("You must provide two arguments.");
@@ -88,7 +93,7 @@ void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
 	uint32_t nonce = *reinterpret_cast<uint32_t*>(Buffer::Data(nonce_buf));
 
-	std::string block_template_blob = std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf));
+	BinaryArray block_template_blob = stringToBinaryArray(std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf)));
 	std::string output = "";
 
 	Block b = AUTO_VAL_INIT(b);
@@ -113,7 +118,7 @@ void get_block_id(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	if (!Buffer::HasInstance(target))
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
-	std::string input = std::string(Buffer::Data(target), Buffer::Length(target));
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
 	std::string output = "";
 
 	Block b = AUTO_VAL_INIT(b);
@@ -140,7 +145,7 @@ NAN_METHOD(convert_blob) {
 	if (!Buffer::HasInstance(target))
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
-	std::string input = std::string(Buffer::Data(target), Buffer::Length(target));
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
 	BinaryArray output;
 
 	//convert
@@ -166,7 +171,7 @@ void convert_blob_bb(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	if (!Buffer::HasInstance(target))
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
-	std::string input = std::string(Buffer::Data(target), Buffer::Length(target));
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
 	BinaryArray output;
 
 	//convert
@@ -227,7 +232,6 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	}
 }
 
-
 static bool fillExtra(Block& block1, const Block& block2) {
 	TransactionExtraMergeMiningTag mm_tag;
     mm_tag.depth = 0;
@@ -285,7 +289,7 @@ NAN_METHOD(convert_blob_fa) {
     if (!Buffer::HasInstance(target))
         return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
-    std::string input = std::string(Buffer::Data(target), Buffer::Length(target));
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
 	BinaryArray output;
 
     //convert
@@ -328,8 +332,8 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 
     uint32_t nonce = *reinterpret_cast<uint32_t*>(Buffer::Data(nonce_buf));
 
-    std::string block_template_blob = std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf));
-    std::string output = "";
+	BinaryArray block_template_blob = stringToBinaryArray(std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf)));
+	std::string output = "";
 
     Block b = AUTO_VAL_INIT(b);
     if (!parse_and_validate_block_from_blob(block_template_blob, b))
