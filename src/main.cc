@@ -70,7 +70,7 @@ std::string uint64be_to_blob(uint64_t num) {
 	return res;
 }
 
-BinaryArray stringToBinaryArray(std::string &str)
+BinaryArray stringToBinaryArray(const std::string &str)
 {
 	BinaryArray bin;
 	bin.resize(str.size());
