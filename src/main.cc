@@ -339,7 +339,7 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     uint32_t nonce = *reinterpret_cast<uint32_t*>(Buffer::Data(nonce_buf));
 
 	BinaryArray block_template_blob = stringToBinaryArray(std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf)));
-	BinaryArray output = "";
+	BinaryArray output;
 
     Block b = AUTO_VAL_INIT(b);
     if (!parse_and_validate_block_from_blob(block_template_blob, b))
