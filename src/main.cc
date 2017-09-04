@@ -49,12 +49,26 @@ bool parse_and_validate_block_from_blob(const BinaryArray& b_blob, Block& b)
 	return true;
 }
 
-bool block_to_blob(const Block& b, std::string &blob)
+BinaryArray stringToBinaryArray(const std::string &str)
 {
-	BinaryArray block_blob = toBinaryArray(b);
-	std::string blocktemplate_blob = toHex(block_blob);
-	blob = blocktemplate_blob;
-	return blocktemplate_blob.length() > 0;
+	BinaryArray bin;
+	bin.resize(str.size());
+	bin.assign(str.begin(), str.end());
+	return bin;
+}
+
+std::string BinaryArrayToString(const BinaryArray &bin)
+{
+	std::string str;
+	str.resize(bin.size());
+	str.assign(bin.begin(), bin.end());
+	return str;
+}
+
+bool block_to_blob(const Block& b, BinaryArray &blob)
+{
+	blob = toBinaryArray(b);
+	return blob.size() > 0;
 }
 
 std::string uint64be_to_blob(uint64_t num) {
@@ -68,14 +82,6 @@ std::string uint64be_to_blob(uint64_t num) {
 	res[6] = num >> 8 & 0xff;
 	res[7] = num & 0xff;
 	return res;
-}
-
-BinaryArray stringToBinaryArray(const std::string &str)
-{
-	BinaryArray bin;
-	bin.resize(str.size());
-	bin.assign(str.begin(), str.end());
-	return bin;
 }
 
 void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
@@ -94,7 +100,7 @@ void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	uint32_t nonce = *reinterpret_cast<uint32_t*>(Buffer::Data(nonce_buf));
 
 	BinaryArray block_template_blob = stringToBinaryArray(std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf)));
-	std::string output = "";
+	BinaryArray output;
 
 	Block b = AUTO_VAL_INIT(b);
 	if (!parse_and_validate_block_from_blob(block_template_blob, b))
@@ -333,7 +339,7 @@ void construct_block_blob_fa(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     uint32_t nonce = *reinterpret_cast<uint32_t*>(Buffer::Data(nonce_buf));
 
 	BinaryArray block_template_blob = stringToBinaryArray(std::string(Buffer::Data(block_template_buf), Buffer::Length(block_template_buf)));
-	std::string output = "";
+	BinaryArray output = "";
 
     Block b = AUTO_VAL_INIT(b);
     if (!parse_and_validate_block_from_blob(block_template_blob, b))
