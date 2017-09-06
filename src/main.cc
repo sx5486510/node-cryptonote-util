@@ -105,7 +105,7 @@ void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	Block b = AUTO_VAL_INIT(b);
 	if (!parse_and_validate_block_from_blob(block_template_blob, b))
 		return THROW_ERROR_EXCEPTION("Failed to parse Block");
-	// b.nonce = nonce;
+	b.nonce = nonce;
 	if (!block_to_blob(b, output))
 		return THROW_ERROR_EXCEPTION("Failed to convert Block to blob");
 
