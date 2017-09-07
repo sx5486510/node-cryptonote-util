@@ -7,9 +7,12 @@
 #include <stdint.h>
 #include <string.h>
 #include <Common/int-util.h>
+extern "C"
+{
 #include <crypto/oaes_lib.h>
 #include <crypto/keccak.h>
 #include <crypto/hash-ops.h>
+}
 
 static void(*const extra_hashes[4])(const void *, size_t, char *) = {
 	hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
