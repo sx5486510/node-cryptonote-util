@@ -15,7 +15,6 @@
                 "src/crypto/crypto-ops-data.c",
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
-                "src/crypto/hash-extra-blake.c",
                 "src/crypto/blake256.c",
                 "src/Logging/ILogger.cpp",
                 "src/Common/MemoryInputStream.cpp",

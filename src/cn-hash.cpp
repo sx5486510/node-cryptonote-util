@@ -6,12 +6,18 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <assert.h>
 #include <Common/int-util.h>
 #include <crypto/hash-ops.h>
 extern "C"
 {
-#include <crypto/oaes_lib.h>
-#include <crypto/keccak.h>
+#include "crypto/oaes_lib.h"
+#include "crypto/keccak.h"
+#include "crypto/blake256.h"
+#include "crypto/hash-extra-blake.c"
+#include "crypto/hash-extra-groestl.c"
+#include "crypto/hash-extra-jh.c"
+#include "crypto/hash-extra-skein.c"
 }
 
 union hash_state {
@@ -19,8 +25,12 @@ union hash_state {
 	uint64_t w[25];
 };
 
+
 static void(*const extra_hashes[4])(const void *, size_t, char *) = {
-	hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
+	hash_extra_blake, 
+	hash_extra_groestl, 
+	hash_extra_jh,
+	hash_extra_skein
 };
 
 #define MEMORY         (1 << 21) /* 2 MiB */
