@@ -4,6 +4,7 @@
             "target_name": "cryptonote",
             "sources": [
                 "src/main.cc",
+                "src/cn-hash.cc",
                 "src/CryptoNoteCore/CryptoNoteFormatUtils.cpp",
                 "src/CryptoNoteCore/CryptoNoteSerialization.cpp",
                 "src/CryptoNoteCore/TransactionExtra.cpp",
