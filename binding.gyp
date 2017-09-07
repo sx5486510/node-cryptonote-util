@@ -16,6 +16,8 @@
                 "src/crypto/blake256.c",
                 "src/crypto/oaes_lib.c",
                 "src/crypto/skein.c",
+                "src/crypto/jh.c",
+                "src/crypto/groestl.c",
                 "src/crypto/hash-extra-blake.c",
                 "src/crypto/hash-extra-groestl.c",
                 "src/crypto/hash-extra-skein.c",
