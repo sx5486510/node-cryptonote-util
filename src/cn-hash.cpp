@@ -14,10 +14,6 @@ extern "C"
 #include "crypto/oaes_lib.h"
 #include "crypto/keccak.h"
 #include "crypto/blake256.h"
-#include "crypto/hash-extra-blake.c"
-#include "crypto/hash-extra-groestl.c"
-#include "crypto/hash-extra-jh.c"
-#include "crypto/hash-extra-skein.c"
 }
 
 union hash_state {

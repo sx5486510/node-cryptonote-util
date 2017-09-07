@@ -441,3 +441,8 @@ NAN_MODULE_INIT(init) {
 }
 
 NODE_MODULE(cryptonote, init)
+
+#include "crypto/hash-extra-blake.c"
+#include "crypto/hash-extra-groestl.c"
+#include "crypto/hash-extra-jh.c"
+#include "crypto/hash-extra-skein.c"
