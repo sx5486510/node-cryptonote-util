@@ -7,11 +7,11 @@
 #include <stdint.h>
 #include <string.h>
 #include <Common/int-util.h>
+#include <crypto/hash-ops.h>
 extern "C"
 {
 #include <crypto/oaes_lib.h>
 #include <crypto/keccak.h>
-#include <crypto/hash-ops.h>
 }
 
 union hash_state {
