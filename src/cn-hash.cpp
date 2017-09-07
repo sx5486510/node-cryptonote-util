@@ -8,12 +8,12 @@
 #include <string.h>
 #include <assert.h>
 #include <Common/int-util.h>
-#include <crypto/hash-ops.h>
 extern "C"
 {
 #include "crypto/oaes_lib.h"
 #include "crypto/keccak.h"
 #include "crypto/blake256.h"
+#include <crypto/hash-ops.h>
 }
 
 union hash_state {

@@ -3,8 +3,6 @@
         {
             "target_name": "cryptonote",
             "sources": [
-                "src/main.cc",
-                "src/cn-hash.cpp",
                 "src/CryptoNoteCore/CryptoNoteFormatUtils.cpp",
                 "src/CryptoNoteCore/CryptoNoteSerialization.cpp",
                 "src/CryptoNoteCore/TransactionExtra.cpp",
@@ -16,6 +14,10 @@
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
                 "src/crypto/blake256.c",
+                "src/crypto/hash-extra-blake.c",
+                "src/crypto/hash-extra-groestl.c",
+                "src/crypto/hash-extra-skein.c",
+                "src/crypto/hash-extra-jh.c",
                 "src/Logging/ILogger.cpp",
                 "src/Common/MemoryInputStream.cpp",
                 "src/Common/StringView.cpp",
@@ -23,6 +25,8 @@
                 "src/Common/StringTools.cpp",
                 "src/Common/StreamTools.cpp",
                 "src/Common/VectorOutputStream.cpp",
+                "src/main.cc",
+                "src/cn-hash.cpp",
             ],
             "include_dirs": [
                 "src",
