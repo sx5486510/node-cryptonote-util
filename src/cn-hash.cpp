@@ -14,6 +14,11 @@ extern "C"
 #include <crypto/hash-ops.h>
 }
 
+union hash_state {
+	uint8_t b[200];
+	uint64_t w[25];
+};
+
 static void(*const extra_hashes[4])(const void *, size_t, char *) = {
 	hash_extra_blake, hash_extra_groestl, hash_extra_jh, hash_extra_skein
 };
