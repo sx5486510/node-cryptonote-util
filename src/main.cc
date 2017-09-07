@@ -421,7 +421,7 @@ void cn_slow_hash(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	if (!Buffer::HasInstance(target))
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
 
-	byte crytoNightHash[32] = { 0 };
+	uint8_t crytoNightHash[32] = { 0 };
 	cn_slow_hash_impl(Buffer::Data(target), Buffer::Length(target), crytoNightHash);
 
 	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)crytoNightHash, sizeof(crytoNightHash)).ToLocalChecked();
