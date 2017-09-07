@@ -93,6 +93,13 @@ void cn_fast_hash(char *data, uint32_t length, char* hash) {
 	memcpy(hash, nativehas, 32);
 }
 
+void hash_process(union hash_state *state, const uint8_t *buf, size_t count) {
+	keccak1600(buf, (int)count, (uint8_t*)state);
+}
+
+void hash_permutation(union hash_state *state) {
+	keccakf((uint64_t*)state, 24);
+}
 void cn_slow_hash_impl(char *data, uint32_t length, char *hash) {
 	uint8_t* long_state = new uint8_t[MEMORY];
 	union cn_slow_hash_state state;
