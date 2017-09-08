@@ -429,6 +429,30 @@ void cn_slow_hash(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 	);
 }
 
+void get_previous_block_hash(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+	if (info.Length() < 1)
+		return THROW_ERROR_EXCEPTION("You must provide one argument.");
+
+	Local<Object> target = info[0]->ToObject();
+
+	if (!Buffer::HasInstance(target))
+		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
+
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
+	BinaryArray output;
+
+	//convert
+	Block b = AUTO_VAL_INIT(b);
+	if (!parse_and_validate_block_from_blob(input, b)) {
+		return THROW_ERROR_EXCEPTION("Failed to parse Block");
+	}
+	
+	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)b.previousBlockHash.data, sizeof(b.previousBlockHash.data)).ToLocalChecked();
+	info.GetReturnValue().Set(
+		returnValue
+	);
+}
+
 NAN_MODULE_INIT(init) {
 	Nan::Set(target, Nan::New("construct_block_blob").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(construct_block_blob)).ToLocalChecked());
 	Nan::Set(target, Nan::New("get_block_id").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(get_block_id)).ToLocalChecked());
@@ -437,6 +461,7 @@ NAN_MODULE_INIT(init) {
 	Nan::Set(target, Nan::New("address_decode").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(address_decode)).ToLocalChecked());
 	Nan::Set(target, Nan::New("address_decode_integrated").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(address_decode_integrated)).ToLocalChecked());
 	Nan::Set(target, Nan::New("cn_slow_hash").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(cn_slow_hash)).ToLocalChecked());
+	Nan::Set(target, Nan::New("get_previous_block_hash").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(get_previous_block_hash)).ToLocalChecked());
 }
 
 NODE_MODULE(cryptonote, init)
