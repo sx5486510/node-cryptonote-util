@@ -251,8 +251,8 @@ Handle<Value> get_previous_block_hash(const Arguments& args) {
 	if (!Buffer::HasInstance(target))
 		return except("Argument should be a buffer object.");
 
-	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
-	BinaryArray output;
+    blobdata input = std::string(Buffer::Data(target), Buffer::Length(target));
+    blobdata output = "";
 
 	//convert
 	bb_block b = AUTO_VAL_INIT(b);
