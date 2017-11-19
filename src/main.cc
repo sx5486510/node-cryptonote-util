@@ -266,7 +266,7 @@ void get_previous_block_hash(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 		return THROW_ERROR_EXCEPTION("Failed to parse Block");
 	}
 	
-	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)b.prev_id, sizeof(b.prev_id)).ToLocalChecked();
+	v8::Local<v8::Value> returnValue = Nan::CopyBuffer((char*)&b.prev_id, sizeof(b.prev_id)).ToLocalChecked();
 	info.GetReturnValue().Set(
 		returnValue
 	);
@@ -282,7 +282,5 @@ NAN_MODULE_INIT(init) {
 	//Nan::Set(target, Nan::New("cn_slow_hash").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(cn_slow_hash)).ToLocalChecked());
 	Nan::Set(target, Nan::New("get_previous_block_hash").ToLocalChecked(), Nan::GetFunction(Nan::New<FunctionTemplate>(get_previous_block_hash)).ToLocalChecked());
 }
-
-NODE_MODULE(cryptonote, init)
 
 NODE_MODULE(cryptonote, init)
