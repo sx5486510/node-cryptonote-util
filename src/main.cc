@@ -260,7 +260,7 @@ Handle<Value> get_previous_block_hash(const Arguments& args) {
 		return except("Failed to parse Block");
 	}
 	
-    Buffer* buff = Buffer::New((char*)b.previousBlockHash.data, sizeof(b.previousBlockHash.data));
+    Buffer* buff = Buffer::New((char*)b.prev_id.data, sizeof(b.prev_id.data));
     return scope.Close(buff->handle_);
 }
 
