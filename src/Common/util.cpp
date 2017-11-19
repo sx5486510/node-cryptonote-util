@@ -1,26 +1,14 @@
-// Copyright (c) 2012-2016, The CryptoNote developers, The Bytecoin developers
-//
-// This file is part of Bytecoin.
-//
-// Bytecoin is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Bytecoin is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with Bytecoin.  If not, see <http://www.gnu.org/licenses/>.
+// Copyright (c) 2012-2013 The Cryptonote developers
+// Distributed under the MIT/X11 software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "Util.h"
 #include <cstdio>
 
-#include <boost/filesystem.hpp>
+#include "include_base_utils.h"
+using namespace epee;
 
-#include "CryptoNoteConfig.h"
+#include "util.h"
+#include "cryptonote_config.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -31,8 +19,10 @@
 #endif
 
 
-namespace Tools
+namespace tools
 {
+  std::function<void(void)> signal_handler::m_handler;
+
 #ifdef WIN32
   std::string get_windows_version_display_string()
   {
@@ -288,15 +278,17 @@ std::string get_nix_version_display_string()
     namespace fs = boost::filesystem;
     char psz_path[MAX_PATH] = "";
 
-    if(SHGetSpecialFolderPathA(NULL, psz_path, nfolder, iscreate)) {
+    if(SHGetSpecialFolderPathA(NULL, psz_path, nfolder, iscreate))
+    {
       return psz_path;
     }
 
+    LOG_ERROR("SHGetSpecialFolderPathA() failed, could not obtain requested path.");
     return "";
   }
 #endif
 
-  std::string getDefaultDataDirectory()
+  std::string get_default_data_dir()
   {
     //namespace fs = boost::filesystem;
     // Windows < Vista: C:\Documents and Settings\Username\Application Data\CRYPTONOTE_NAME
@@ -306,7 +298,7 @@ std::string get_nix_version_display_string()
     std::string config_folder;
 #ifdef WIN32
     // Windows
-    config_folder = get_special_folder_path(CSIDL_APPDATA, true) + "/" + CryptoNote::CRYPTONOTE_NAME;
+    config_folder = get_special_folder_path(CSIDL_APPDATA, true) + "/" + CRYPTONOTE_NAME;
 #else
     std::string pathRet;
     char* pszHome = getenv("HOME");
@@ -317,10 +309,10 @@ std::string get_nix_version_display_string()
 #ifdef MAC_OSX
     // Mac
     pathRet /= "Library/Application Support";
-    config_folder =  (pathRet + "/" + CryptoNote::CRYPTONOTE_NAME);
+    config_folder =  (pathRet + "/" + CRYPTONOTE_NAME);
 #else
     // Unix
-    config_folder = (pathRet + "/." + CryptoNote::CRYPTONOTE_NAME);
+    config_folder = (pathRet + "/." + CRYPTONOTE_NAME);
 #endif
 #endif
 
@@ -332,11 +324,22 @@ std::string get_nix_version_display_string()
     namespace fs = boost::filesystem;
     boost::system::error_code ec;
     fs::path fs_path(path);
-    if (fs::is_directory(fs_path, ec)) {
+    if (fs::is_directory(fs_path, ec))
+    {
       return true;
     }
 
-    return fs::create_directories(fs_path, ec);
+    bool res = fs::create_directories(fs_path, ec);
+    if (res)
+    {
+      LOG_PRINT_L2("Created directory: " << path);
+    }
+    else
+    {
+      LOG_PRINT_L2("Can't create directory: " << path << ", err: "<< ec.message());
+    }
+
+    return res;
   }
 
   std::error_code replace_file(const std::string& replacement_name, const std::string& replaced_name)
@@ -358,10 +361,4 @@ std::string get_nix_version_display_string()
 #endif
     return std::error_code(code, std::system_category());
   }
-
-  bool directoryExists(const std::string& path) {
-    boost::system::error_code ec;
-    return boost::filesystem::is_directory(path, ec);
-  }
-
 }

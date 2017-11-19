@@ -204,7 +204,7 @@ static void OutputTransformation(hashState *ctx) {
 
 /* initialise context */
 static void Init(hashState* ctx) {
-  unsigned int i = 0;
+  int i = 0;
   /* allocate memory for state and data buffer */
 
   for(;i<(SIZE512/sizeof(uint32_t));i++)
