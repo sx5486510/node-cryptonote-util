@@ -242,12 +242,35 @@ Handle<Value> address_decode(const Arguments& args) {
     return scope.Close(Integer::New(static_cast<uint32_t>(prefix)));
 }
 
+Handle<Value> get_previous_block_hash(const Arguments& args) {
+	if (args.Length() < 1)
+		return except("You must provide one argument.");
+
+	Local<Object> target = args[0]->ToObject();
+
+	if (!Buffer::HasInstance(target))
+		return except("Argument should be a buffer object.");
+
+	BinaryArray input = stringToBinaryArray(std::string(Buffer::Data(target), Buffer::Length(target)));
+	BinaryArray output;
+
+	//convert
+	bb_block b = AUTO_VAL_INIT(b);
+	if (!parse_and_validate_block_from_blob(input, b)) {
+		return except("Failed to parse Block");
+	}
+	
+    Buffer* buff = Buffer::New((char*)b.previousBlockHash.data, sizeof(b.previousBlockHash.data));
+    return scope.Close(buff->handle_);
+}
+
 void init(Handle<Object> exports) {
     exports->Set(String::NewSymbol("construct_block_blob"), FunctionTemplate::New(construct_block_blob)->GetFunction());
     exports->Set(String::NewSymbol("get_block_id"), FunctionTemplate::New(get_block_id)->GetFunction());
     exports->Set(String::NewSymbol("convert_blob"), FunctionTemplate::New(convert_blob)->GetFunction());
     exports->Set(String::NewSymbol("convert_blob_bb"), FunctionTemplate::New(convert_blob_bb)->GetFunction());
     exports->Set(String::NewSymbol("address_decode"), FunctionTemplate::New(address_decode)->GetFunction());
+    exports->Set(String::NewSymbol("get_previous_block_hash"), FunctionTemplate::New(get_previous_block_hash)->GetFunction());
 }
 
 NODE_MODULE(cryptonote, init)
