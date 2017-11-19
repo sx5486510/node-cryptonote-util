@@ -243,6 +243,7 @@ Handle<Value> address_decode(const Arguments& args) {
 }
 
 Handle<Value> get_previous_block_hash(const Arguments& args) {
+    HandleScope scope;
 	if (args.Length() < 1)
 		return except("You must provide one argument.");
 
@@ -260,7 +261,7 @@ Handle<Value> get_previous_block_hash(const Arguments& args) {
 		return except("Failed to parse Block");
 	}
 	
-    Buffer* buff = Buffer::New((char*)b.prev_id, sizeof(b.prev_id));
+    Buffer* buff = Buffer::New((char*)&(b.prev_id), sizeof(b.prev_id));
     return scope.Close(buff->handle_);
 }
 
