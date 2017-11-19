@@ -18,7 +18,7 @@ using namespace node;
 using namespace v8;
 using namespace cryptonote;
 
-#define THROW_ERROR_EXCEPTION(x) Nan::ThrowError(x
+#define THROW_ERROR_EXCEPTION(x) Nan::ThrowError(x)
 
 blobdata uint64be_to_blob(uint64_t num) {
     blobdata res = "        ";
