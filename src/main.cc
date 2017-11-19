@@ -77,10 +77,10 @@ static bool construct_parent_block(const cryptonote::block& b, cryptonote::block
 }
 
 NAN_METHOD(convert_blob) {
-    if (args.Length() < 1)
+    if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
-    Local<Object> target = args[0]->ToObject();
+    Local<Object> target = info[0]->ToObject();
 
     if (!Buffer::HasInstance(target))
         return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
@@ -112,10 +112,10 @@ NAN_METHOD(convert_blob) {
 }
 
 void get_block_id(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-    if (args.Length() < 1)
+    if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
-    Local<Object> target = args[0]->ToObject();
+    Local<Object> target = info[0]->ToObject();
 
     if (!Buffer::HasInstance(target))
         return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
@@ -138,11 +138,11 @@ void get_block_id(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-    if (args.Length() < 2)
+    if (info.Length() < 2)
         return THROW_ERROR_EXCEPTION("You must provide two arguments.");
 
-    Local<Object> block_template_buf = args[0]->ToObject();
-    Local<Object> nonce_buf = args[1]->ToObject();
+    Local<Object> block_template_buf = info[0]->ToObject();
+    Local<Object> nonce_buf = info[1]->ToObject();
 
     if (!Buffer::HasInstance(block_template_buf) || !Buffer::HasInstance(nonce_buf))
         return THROW_ERROR_EXCEPTION("Both arguments should be buffer objects.");
@@ -189,10 +189,10 @@ void construct_block_blob(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void convert_blob_bb(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-    if (args.Length() < 1)
+    if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
-    Local<Object> target = args[0]->ToObject();
+    Local<Object> target = info[0]->ToObject();
 
     if (!Buffer::HasInstance(target))
         return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
@@ -214,10 +214,10 @@ void convert_blob_bb(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-    if (args.Length() < 1)
+    if (info.Length() < 1)
         return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
-    Local<Object> target = args[0]->ToObject();
+    Local<Object> target = info[0]->ToObject();
 
     if (!Buffer::HasInstance(target))
         return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
@@ -249,10 +249,10 @@ void address_decode(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void get_previous_block_hash(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-	if (args.Length() < 1)
+	if (info.Length() < 1)
 		return THROW_ERROR_EXCEPTION("You must provide one argument.");
 
-	Local<Object> target = args[0]->ToObject();
+	Local<Object> target = info[0]->ToObject();
 
 	if (!Buffer::HasInstance(target))
 		return THROW_ERROR_EXCEPTION("Argument should be a buffer object.");
