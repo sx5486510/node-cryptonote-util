@@ -4,6 +4,7 @@
 #include <v8.h>
 #include <stdint.h>
 #include <string>
+#include <nan.h>
 #include <algorithm>
 #include "cryptonote_core/cryptonote_basic.h"
 #include "cryptonote_core/cryptonote_format_utils.h"
@@ -17,9 +18,7 @@ using namespace node;
 using namespace v8;
 using namespace cryptonote;
 
-Handle<Value> except(const char* msg) {
-    return ThrowException(Exception::Error(String::New(msg)));
-}
+#define THROW_ERROR_EXCEPTION(x) Nan::ThrowError(x
 
 blobdata uint64be_to_blob(uint64_t num) {
     blobdata res = "        ";
