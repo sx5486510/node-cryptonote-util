@@ -6,11 +6,11 @@
 
 #include <vector>
 
-#include "serialization.h"
-#include "debug_archive.h"
 #include "crypto/chacha8.h"
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
+#include "serialization.h"
+#include "debug_archive.h"
 
 // read
 template <template <bool> class Archive>
