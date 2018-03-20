@@ -1,4 +1,5 @@
-#pragma once
+#ifndef __CRYPTONOTE_CONFIG_H__
+#define __CRYPTONOTE_CONFIG_H__ 1
 
 #define CRYPTONOTE_PUBLIC_ADDRESS_TEXTBLOB_VER          0
 #define CURRENT_TRANSACTION_VERSION                     1
@@ -15,3 +16,5 @@
 
 #define CRYPTONOTE_MINED_MONEY_UNLOCK_WINDOW            60
 #define CRYPTONOTE_DISPLAY_DECIMAL_POINT                12
+
+#endif // __CRYPTONOTE_CONFIG_H__
