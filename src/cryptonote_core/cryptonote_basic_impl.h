@@ -23,6 +23,14 @@ namespace cryptonote {
   };
 
 
+  struct address_parse_info
+  {
+	  account_public_address address;
+	  bool is_subaddress;
+	  bool has_payment_id;
+	  crypto::hash8 payment_id;
+  };
+
 #pragma pack(push, 1)
   struct public_address_outer_blob
   {
@@ -36,12 +44,18 @@ namespace cryptonote {
   /************************************************************************/
   /* Cryptonote helper functions                                          */
   /************************************************************************/
+  size_t get_min_block_size(uint8_t version);
   size_t get_max_block_size();
   size_t get_max_tx_size();
-  bool get_block_reward(size_t median_size, size_t current_block_size, uint64_t already_generated_coins, uint64_t &reward);
+  // bool get_block_reward(size_t median_size, size_t current_block_size, uint64_t already_generated_coins, uint64_t &reward);
+  bool get_block_reward(size_t median_size, size_t current_block_size, uint64_t already_generated_coins, uint64_t &reward, uint8_t version);
   uint8_t get_account_address_checksum(const public_address_outer_blob& bl);
   std::string get_account_address_as_str(const account_public_address& adr);
-  bool get_account_address_from_str(account_public_address& adr, const std::string& str);
+  bool get_account_address_from_str(
+	  address_parse_info& info
+	  , network_type nettype
+	  , const std::string& str
+  );
   bool is_coinbase(const transaction& tx);
 
   bool operator ==(const cryptonote::transaction& a, const cryptonote::transaction& b);
@@ -61,5 +75,4 @@ namespace crypto {
   inline std::ostream &operator <<(std::ostream &o, const crypto::key_derivation &v) { return print256(o, v); }
   inline std::ostream &operator <<(std::ostream &o, const crypto::key_image &v) { return print256(o, v); }
   inline std::ostream &operator <<(std::ostream &o, const crypto::signature &v) { return print256(o, v); }
-  inline std::ostream &operator <<(std::ostream &o, const crypto::hash &v) { return print256(o, v); }
 }

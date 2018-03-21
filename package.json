@@ -1,21 +1,89 @@
 {
-    "name": "cryptonote-util",
-    "version": "0.0.1",
-    "main": "cryptonote",
-    "author": {
-        "name": "LucasJones",
-        "email": "lucasjonesdev@hotmail.co.uk"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/LucasJones/node-cryptonote-util.git"
-    },
-    "dependencies" : {
-        "bindings" : "*",
-        "nan" : "2"
-    },
-    "keywords": [
-        "cryptonight",
-        "cryptonote"
+  "_args": [
+    [
+      {
+        "raw": "cryptonote-util@git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+        "scope": null,
+        "escapedName": "cryptonote-util",
+        "name": "cryptonote-util",
+        "rawSpec": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+        "spec": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+          "sshUrl": "git+ssh://git@github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+          "httpsUrl": "git+https://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+          "gitUrl": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+          "shortcut": "github:Snipa22/node-cryptonote-util#xmr-Nan-2.0",
+          "directUrl": "https://raw.githubusercontent.com/Snipa22/node-cryptonote-util/xmr-Nan-2.0/package.json"
+        }
+      },
+      "/home/shen/Desktop/Untitled Folder"
     ]
+  ],
+  "_from": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+  "_id": "cryptonote-util@0.0.3",
+  "_inCache": true,
+  "_location": "/cryptonote-util",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cryptonote-util@git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+    "scope": null,
+    "escapedName": "cryptonote-util",
+    "name": "cryptonote-util",
+    "rawSpec": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+    "spec": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+      "sshUrl": "git+ssh://git@github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+      "httpsUrl": "git+https://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+      "gitUrl": "git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+      "shortcut": "github:Snipa22/node-cryptonote-util#xmr-Nan-2.0",
+      "directUrl": "https://raw.githubusercontent.com/Snipa22/node-cryptonote-util/xmr-Nan-2.0/package.json"
+    }
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git://github.com/Snipa22/node-cryptonote-util.git#49d6ec72d499bba9144d4a3ebdf4b62a4262aa8a",
+  "_shasum": "42f6667e30d654207ef46e82fa4c7f1a9b6e1396",
+  "_shrinkwrap": null,
+  "_spec": "cryptonote-util@git://github.com/Snipa22/node-cryptonote-util.git#xmr-Nan-2.0",
+  "_where": "/home/shen/Desktop/Untitled Folder",
+  "author": {
+    "name": "LucasJones",
+    "email": "lucasjonesdev@hotmail.co.uk"
+  },
+  "bugs": {
+    "url": "https://github.com/clintar/node-cryptonote-util/issues"
+  },
+  "dependencies": {
+    "bindings": "*",
+    "nan": "^2.0.0"
+  },
+  "description": "Node-Cryptonote-Util ====================",
+  "devDependencies": {},
+  "gitHead": "49d6ec72d499bba9144d4a3ebdf4b62a4262aa8a",
+  "gypfile": true,
+  "homepage": "https://github.com/clintar/node-cryptonote-util#readme",
+  "keywords": [
+    "cryptonight",
+    "cryptonote"
+  ],
+  "main": "cryptonote",
+  "name": "cryptonote-util",
+  "optionalDependencies": {},
+  "readme": "Node-Cryptonote-Util\n====================\n\nDependencies\n------------\n\n* Boost (http://www.boost.org/)",
+  "readmeFilename": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clintar/node-cryptonote-util.git"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "version": "0.0.3"
 }

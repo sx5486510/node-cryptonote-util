@@ -4,6 +4,7 @@
 
 #pragma once 
 
+#include "p2p/p2p_protocol_defs.h"
 #include <mutex>
 #include <system_error>
 #include <boost/filesystem.hpp>
@@ -11,7 +12,6 @@
 #include "crypto/crypto.h"
 #include "crypto/hash.h"
 #include "misc_language.h"
-#include "p2p/p2p_protocol_defs.h"
 
 namespace tools
 {
@@ -61,7 +61,8 @@ namespace tools
       }
       else
       {
-        LOG_PRINT_RED_L0("Got control signal " << type << ". Exiting without saving...");
+		  // LOG_PRINT_RED_L0("Got control signal " << type << ". Exiting without saving...");
+		  std::cout << "Got control signal " << type << ". Exiting without saving...";
         return FALSE;
       }
       return TRUE;

@@ -4,6 +4,8 @@
 
 #if !defined(_MSC_VER)
 #include <alloca.h>
+#else
+#include <malloc.h>
 #endif
 #include <cassert>
 #include <cstddef>

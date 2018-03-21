@@ -59,7 +59,7 @@ namespace nodetool
     ss << std::setfill ('0') << std::setw (8) << std::hex << std::noshowbase;
     BOOST_FOREACH(const peerlist_entry& pe, pl)
     {
-      ss << pe.id << "\t" << epee::string_tools::get_ip_string_from_int32(pe.adr.ip) << ":" << boost::lexical_cast<std::string>(pe.adr.port) << " \tlast_seen: " << epee::misc_utils::get_time_interval_string(now_time - pe.last_seen) << std::endl;
+      // ss << pe.id << "\t" << epee::string_tools::get_ip_string_from_int32(pe.adr.ip) << ":" << boost::lexical_cast<std::string>(pe.adr.port) << " \tlast_seen: " << epee::misc_utils::get_time_interval_string(now_time - pe.last_seen) << std::endl;
     }
     return ss.str();
   }
@@ -218,7 +218,6 @@ namespace nodetool
   //These commands are considered as insecure, and made in debug purposes for a limited lifetime.
   //Anyone who feel unsafe with this commands can disable the ALLOW_GET_STAT_COMMAND macro.
 
-
   template<class payload_stat_info>
   struct COMMAND_REQUEST_STAT_INFO_T
   {
@@ -307,9 +306,4 @@ namespace nodetool
   };
 
 #endif
-
-
 }
-
-
-

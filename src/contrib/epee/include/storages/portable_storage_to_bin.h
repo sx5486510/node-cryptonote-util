@@ -28,6 +28,7 @@
 
 #pragma once 
 
+#include "pragma_comp_defs.h"
 #include "misc_language.h"
 #include "portable_storage_base.h"
 
@@ -47,6 +48,9 @@ namespace epee
 
     PRAGMA_WARNING_PUSH
       PRAGMA_GCC("GCC diagnostic ignored \"-Wstrict-aliasing\"")
+#ifdef __clang__
+      PRAGMA_GCC("GCC diagnostic ignored \"-Wtautological-constant-out-of-range-compare\"")
+#endif
       template<class t_stream>
     size_t pack_varint(t_stream& strm, size_t val)
     {   //the first two bits always reserved for size information
@@ -200,7 +204,7 @@ namespace epee
       pack_varint(strm, sec.m_entries.size());
       for(const section_pair& se: sec.m_entries)
       {
-        CHECK_AND_ASSERT_THROW_MES(se.first.size() < std::numeric_limits<uint8_t>::max(), "storage_entry_name is too long: " << se.first.size() << ", val: " << se.first);
+        CHECK_AND_ASSERT_THROW_MES(se.first.size() < (std::numeric_limits<uint8_t>::max)(), "storage_entry_name is too long: " << se.first.size() << ", val: " << se.first);
         uint8_t len = static_cast<uint8_t>(se.first.size());
         strm.write((const char*)&len, sizeof(len));
         strm.write(se.first.data(), size_t(len));

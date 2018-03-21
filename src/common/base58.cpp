@@ -2,17 +2,16 @@
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-
 #include "base58.h"
+
+#include "util.h"
+#include "int-util.h"
+#include "varint.h"
+#include "crypto/hash.h"
 
 #include <assert.h>
 #include <string>
 #include <vector>
-
-#include "crypto/hash.h"
-#include "int-util.h"
-#include "util.h"
-#include "varint.h"
 
 namespace tools
 {
