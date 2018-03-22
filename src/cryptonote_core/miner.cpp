@@ -220,64 +220,6 @@ namespace cryptonote
 		command_line::add_arg(desc, arg_bg_mining_miner_target_percentage);
 	}
 	//-----------------------------------------------------------------------------------------------------
-	bool miner::init(const boost::program_options::variables_map& vm, network_type nettype)
-	{
-		if (command_line::has_arg(vm, arg_extra_messages))
-		{
-			std::string buff;
-			bool r = file_io_utils::load_file_to_string(command_line::get_arg(vm, arg_extra_messages), buff);
-			CHECK_AND_ASSERT_MES(r, false, "Failed to load file with extra messages: " << command_line::get_arg(vm, arg_extra_messages));
-			std::vector<std::string> extra_vec;
-			boost::split(extra_vec, buff, boost::is_any_of("\n"), boost::token_compress_on);
-			m_extra_messages.resize(extra_vec.size());
-			for (size_t i = 0; i != extra_vec.size(); i++)
-			{
-				string_tools::trim(extra_vec[i]);
-				if (!extra_vec[i].size())
-					continue;
-				std::string buff = string_encoding::base64_decode(extra_vec[i]);
-				if (buff != "0")
-					m_extra_messages[i] = buff;
-			}
-			m_config_folder_path = boost::filesystem::path(command_line::get_arg(vm, arg_extra_messages)).parent_path().string();
-			m_config = AUTO_VAL_INIT(m_config);
-			epee::serialization::load_t_from_json_file(m_config, m_config_folder_path + "/" + MINER_CONFIG_FILE_NAME);
-			MINFO("Loaded " << m_extra_messages.size() << " extra messages, current index " << m_config.current_extra_message_index);
-		}
-
-		if (command_line::has_arg(vm, arg_start_mining))
-		{
-			address_parse_info info;
-			if (!cryptonote::get_account_address_from_str(info, nettype, command_line::get_arg(vm, arg_start_mining)) || info.is_subaddress)
-			{
-				LOG_ERROR("Target account address " << command_line::get_arg(vm, arg_start_mining) << " has wrong format, starting daemon canceled");
-				return false;
-			}
-			m_mine_address = info.address;
-			m_threads_total = 1;
-			m_do_mining = true;
-			if (command_line::has_arg(vm, arg_mining_threads))
-			{
-				m_threads_total = command_line::get_arg(vm, arg_mining_threads);
-			}
-		}
-
-		// Background mining parameters
-		// Let init set all parameters even if background mining is not enabled, they can start later with params set
-		if (command_line::has_arg(vm, arg_bg_mining_enable))
-			set_is_background_mining_enabled(command_line::get_arg(vm, arg_bg_mining_enable));
-		if (command_line::has_arg(vm, arg_bg_mining_ignore_battery))
-			set_ignore_battery(command_line::get_arg(vm, arg_bg_mining_ignore_battery));
-		if (command_line::has_arg(vm, arg_bg_mining_min_idle_interval_seconds))
-			set_min_idle_seconds(command_line::get_arg(vm, arg_bg_mining_min_idle_interval_seconds));
-		if (command_line::has_arg(vm, arg_bg_mining_idle_threshold_percentage))
-			set_idle_threshold(command_line::get_arg(vm, arg_bg_mining_idle_threshold_percentage));
-		if (command_line::has_arg(vm, arg_bg_mining_miner_target_percentage))
-			set_mining_target(command_line::get_arg(vm, arg_bg_mining_miner_target_percentage));
-
-		return true;
-	}
-	//-----------------------------------------------------------------------------------------------------
 	bool miner::is_mining() const
 	{
 		return !m_stop;

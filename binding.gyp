@@ -17,7 +17,18 @@
                 "src/crypto/hash.c",
                 "src/crypto/keccak.c",
                 "src/common/base58.cpp",
+                "src/crypto/hash-extra-blake.c",
                 "src/crypto/aesb.c",
+                "src/crypto/slow-hash.c",
+"src/crypto/hash-extra-groestl.c",
+                "src/crypto/hash-extra-jh.c",
+                "src/crypto/hash-extra-skein.c",
+                "src/crypto/oaes_lib.c",
+                "src/crypto/blake256.c",
+                "src/crypto/groestl.c",
+                "src/crypto/jh.c",
+                "src/crypto/skein.c",               
+ "src/crypto/random.c",
                 "src/contrib/epee/src/hex.cpp",
 				"external/easylogging++/easylogging++.cc",
             ],
@@ -30,7 +41,7 @@
             "include_dirs": [
                 "src",
                 "src/contrib/epee/include",
-				"external/easylogging++"
+				"external/easylogging++",
                 "<!(node -e \"require('nan')\")",
             ],
             "link_settings": {
@@ -42,7 +53,8 @@
             "cflags_cc": [
                   "-std=c++0x",
                   "-fexceptions",
-                  "-frtti",
+                  "-fno-rtti",
+                  "-fGR",
             ],
         }
     ]
