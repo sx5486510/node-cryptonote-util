@@ -1,4 +1,7 @@
+#ifdef _MSC_VER
 #include <WinSock2.h>
+#endif
+
 #include "cryptonote_core/cryptonote_basic.h"
  #include "cryptonote_core/cryptonote_format_utils.h"
  #include "cryptonote_protocol/blobdatatype.h"

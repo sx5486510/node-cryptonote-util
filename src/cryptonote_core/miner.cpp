@@ -28,7 +28,10 @@
 //
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
 
+#ifdef _MSC_VER
 #include <WinSock2.h>
+#endif
+
 #include <sstream>
 #include <numeric>
 #include <boost/utility/value_init.hpp>

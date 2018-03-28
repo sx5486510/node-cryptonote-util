@@ -27,7 +27,11 @@
 // THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // 
 // Parts of this file are originally copyright (c) 2012-2013 The Cryptonote developers
+
+#ifdef _MSC_VER
 #include <WinSock2.h>
+#endif
+
 #include <unordered_set>
 #include "include_base_utils.h"
 #include "string_tools.h"
