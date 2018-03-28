@@ -697,6 +697,7 @@ namespace cryptonote
     return p;
   }
   //---------------------------------------------------------------
+#if 0
   bool get_block_longhash(const block& b, crypto::hash& res, uint64_t height)
   {
     // block 202612 bug workaround
@@ -711,6 +712,7 @@ namespace cryptonote
     crypto::cn_slow_hash(bd.data(), bd.size(), res, cn_variant);
     return true;
   }
+#endif
   //---------------------------------------------------------------
   std::vector<uint64_t> relative_output_offsets_to_absolute(const std::vector<uint64_t>& off)
   {
@@ -732,12 +734,14 @@ namespace cryptonote
     return res;
   }
   //---------------------------------------------------------------
+#if 0
   crypto::hash get_block_longhash(const block& b, uint64_t height)
   {
     crypto::hash p = null_hash;
     get_block_longhash(b, p, height);
     return p;
   }
+#endif
   //---------------------------------------------------------------
   bool parse_and_validate_block_from_blob(const blobdata& b_blob, block& b)
   {
@@ -810,6 +814,7 @@ namespace cryptonote
     block_hashes_cached = block_hashes_cached_count;
   }
   //---------------------------------------------------------------
+#if 0
   crypto::secret_key encrypt_key(crypto::secret_key key, const epee::wipeable_string &passphrase)
   {
     crypto::hash hash;
@@ -817,7 +822,9 @@ namespace cryptonote
     sc_add((unsigned char*)key.data, (const unsigned char*)key.data, (const unsigned char*)hash.data);
     return key;
   }
+#endif
   //---------------------------------------------------------------
+#if 0
   crypto::secret_key decrypt_key(crypto::secret_key key, const epee::wipeable_string &passphrase)
   {
     crypto::hash hash;
@@ -825,4 +832,5 @@ namespace cryptonote
     sc_sub((unsigned char*)key.data, (const unsigned char*)key.data, (const unsigned char*)hash.data);
     return key;
   }
+#endif
 }
