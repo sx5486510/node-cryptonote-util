@@ -53,8 +53,7 @@
             "cflags_cc": [
                   "-std=c++0x",
                   "-fexceptions",
-                  "-fno-rtti",
-                  "-fGR",
+                  "-fno-rtti"
             ],
         }
     ]
