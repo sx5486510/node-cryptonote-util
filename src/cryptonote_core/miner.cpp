@@ -211,17 +211,17 @@ namespace cryptonote
 		m_hashes = 0;
 	}
 	//-----------------------------------------------------------------------------------------------------
-	void miner::init_options(boost::program_options::options_description& desc)
-	{
-		command_line::add_arg(desc, arg_extra_messages);
-		command_line::add_arg(desc, arg_start_mining);
-		command_line::add_arg(desc, arg_mining_threads);
-		command_line::add_arg(desc, arg_bg_mining_enable);
-		command_line::add_arg(desc, arg_bg_mining_ignore_battery);
-		command_line::add_arg(desc, arg_bg_mining_min_idle_interval_seconds);
-		command_line::add_arg(desc, arg_bg_mining_idle_threshold_percentage);
-		command_line::add_arg(desc, arg_bg_mining_miner_target_percentage);
-	}
+	//void miner::init_options(boost::program_options::options_description& desc)
+	//{
+	//	command_line::add_arg(desc, arg_extra_messages);
+	//	command_line::add_arg(desc, arg_start_mining);
+	//	command_line::add_arg(desc, arg_mining_threads);
+	//	command_line::add_arg(desc, arg_bg_mining_enable);
+	//	command_line::add_arg(desc, arg_bg_mining_ignore_battery);
+	//	command_line::add_arg(desc, arg_bg_mining_min_idle_interval_seconds);
+	//	command_line::add_arg(desc, arg_bg_mining_idle_threshold_percentage);
+	//	command_line::add_arg(desc, arg_bg_mining_miner_target_percentage);
+	//}
 	//-----------------------------------------------------------------------------------------------------
 	bool miner::is_mining() const
 	{

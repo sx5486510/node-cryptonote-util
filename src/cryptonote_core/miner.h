@@ -64,7 +64,7 @@ namespace cryptonote
   public: 
     miner(i_miner_handler* phandler);
     ~miner();
-    static void init_options(boost::program_options::options_description& desc);
+    //static void init_options(boost::program_options::options_description& desc);
     bool set_block_template(const block& bl, const difficulty_type& diffic, uint64_t height);
     bool on_block_chain_update();
     bool start(const account_public_address& adr, size_t threads_count, const boost::thread::attributes& attrs, bool do_background = false, bool ignore_battery = false);
