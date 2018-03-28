@@ -7,5 +7,6 @@
 #if defined(_MSC_VER)
 #define POD_CLASS struct
 #else
-#define POD_CLASS class
+// #define POD_CLASS class
+#define POD_CLASS struct
 #endif

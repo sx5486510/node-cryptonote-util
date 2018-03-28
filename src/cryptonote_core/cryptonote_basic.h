@@ -27,7 +27,7 @@
 #include <vector>
 #include <cstring>  // memcmp
 #include <sstream>
-
+#include <atomic>
 
 namespace cryptonote
 {
@@ -476,7 +476,8 @@ namespace cryptonote
           return false;
 
         crypto::hash merkle_root;
-        crypto::tree_hash_from_branch(b.miner_tx_branch.data(), b.miner_tx_branch.size(), miner_tx_hash, 0, merkle_root);
+        crypto::tree_hash_from_branch((const char(*)[32])b.miner_tx_branch.data(),
+			b.miner_tx_branch.size(), (const char *)miner_tx_hash, 0, (const char *)merkle_root);
 
         FIELD(merkle_root);
       }
